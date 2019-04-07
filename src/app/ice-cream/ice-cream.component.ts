@@ -13,9 +13,11 @@ import { Component } from '@angular/core';
 })
 export class IceCreamComponent {
 
+  // 原型属性
   @Emoji()
   flavor = 'vanilla';
-
+  
+  // 实例属性
   toppings = [];
 
   @Confirmable('Are you sure?')
@@ -24,12 +26,21 @@ export class IceCreamComponent {
     this.toppings.push(topping);
   }
 
+  // 原型属性
   @WithTax(0.15)
   get price() {
     return 5.00 + 0.25 * this.toppings.length;
   }
 
 }
+// https://www.zhihu.com/question/52176742
+const iceCreamInstance = new IceCreamComponent();
+console.log(iceCreamInstance.hasOwnProperty('flavor')); // false
+console.log(iceCreamInstance.hasOwnProperty('toppings')); // true
+console.log(iceCreamInstance.hasOwnProperty('price')); // false
+console.log(IceCreamComponent.prototype.hasOwnProperty('flavor'));  // true
+console.log(IceCreamComponent.prototype.hasOwnProperty('toppings')); // false
+console.log(IceCreamComponent.prototype.hasOwnProperty('price')); // true
 
 /// Class
 function Frozen(constructor: Function) {
